@@ -1,0 +1,104 @@
+//navigate link and login and go to banking
+driver.get("https://www.cyclos.org/")
+//products button
+xpath://a[text()='POS']
+//click on demo
+xpath: //a[text()='Visit Online Demo']
+//click on login
+xpath: //div[text()=' Login '] 
+//send user name in login page
+xpath: //input[@placeholder="User"]
+//send password in login page
+xpath: //password-input[@formcontrolname="password"]
+//click on submit button
+xpath: //span[text()='Submit']
+//switch to banking tab
+xpath: //div[text()='Banking']
+
+
+//1.Payment to user
+xpath://a[contains(text(),'Payment to user')]
+//To user contact book
+xpath://button[contains(@class,'btn btn-icon')]
+//select golden travels
+xpath://a[contains(text(),'Golden Travels')]
+//Enter amount
+xpath://div[@class='input-group']//input[1]
+//click dropdown scheduling
+xpath://div[contains(@class,'w-100 open')]
+//scheduling option
+xpath://a[contains(text(),'Pay now')]
+//description
+css:textarea[rows='3']
+//click next button
+xpath://button[contains(@class,'btn d-flex')]
+//confirm button
+xpath:(//action-button[@class='d-inline-block button']//button)[1]
+// for cannot complete payment(notification)
+xpath://div[text()='You have exceeded the maximum of payments per day for the demo network']
+//click cancel button if payment failed
+xpath://span[text()='×']
+//successful payment
+xpath: //div[text()='The payment was successfully processed']
+
+//scheduled in scheduling
+xpath://a[contains(text(),'Scheduled')]
+//enter date
+xpath://input[@type='date']
+
+// monthly installement
+xpath:(//a[contains(@class,'select-option undefined')]/following-sibling::a)[2]
+//Number of installement
+xpath://input[contains(@class,'form-control w-100')]
+//click now radio button
+xpath://label[text()=' Now ']
+
+//recuring payments
+xpath://a[contains(text(),'Recurring payments')]
+
+
+//2.Payment to System
+xpath://div[text()='Payment to system']
+//Amount tab
+xpath://div[@class='input-group']//input[1]
+//click on scheduling
+xpath://div[contains(@class,'w-100 mw-100')]
+//pay now option
+xpath://div[text()='Pay now']
+//description
+xpath://textarea[contains(@class,'form-control ng-pristine')]
+//next button
+xpath://span[text()='Next']
+//confirm button
+xpath:(//button[@type='button'])[2]
+//notification message for not success
+xpath://div[text()='You have exceeded the maximum of payments per day for the demo network']
+//click cancel button
+xpath://span[text()='×']
+//success payment
+xpath://div[text()='The payment was successfully processed']
+
+//click on scheduling in scheduling 
+xpath://a[contains(text(),'Scheduled')]
+//continue in top [process is repeating occur in top]
+
+//click on monthly installement
+xpath://a[contains(text(),'Monthly installments')]
+//continue in top [process is repeating occur in top]
+
+//click on recurring payment
+xpath://a[contains(text(),'Recurring payments')]
+//continue in top process [process is repeating occur in top]
+
+
+//3.
+
+
+
+
+
+
+
+
+
+

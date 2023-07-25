@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Message History]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Message Result(failed)">
+    <classes>
+      <class name="RunnerFile.RunnerClass4">
+        <methods>
+          <include name="setUpClass"/>
+          <include name="tearDownClass"/>
+          <include name="runScenario" invocation-numbers="0"/>
+        </methods>
+      </class> <!-- RunnerFile.RunnerClass4 -->
+    </classes>
+  </test> <!-- Message Result(failed) -->
+</suite> <!-- Failed suite [Message History] -->

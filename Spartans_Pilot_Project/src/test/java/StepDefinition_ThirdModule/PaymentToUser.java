@@ -1,5 +1,7 @@
 package StepDefinition_ThirdModule;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -8,24 +10,30 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import zmq.socket.reqrep.Rep;
 
 public class PaymentToUser {
 	public static WebDriver driver;
-	
 	@Given("User should launch the cyclos website and login with the valid credentials")
-	
-	public void user_should_launch_the_cyclos_website_and_login_with_the_valid_credentials() throws InterruptedException {
+	public void user_should_launch_the_cyclos_website_and_login_with_the_valid_credentials() throws InterruptedException, IOException {
 		WebDriverManager.chromedriver().setup();
 		driver=new ChromeDriver();
 		driver.manage().window().maximize();
-	   driver.get("https://cyclos.org");
-	   WebDriverWait wait = new WebDriverWait(driver,30);
+		driver.get("https://cyclos.org");
+	   WebDriverWait wait = new WebDriverWait(driver,60);
 	   PageFactory.initElements(driver, Repository.class);
 	   Repository.product.click();
 	   String parent=driver.getWindowHandle();
@@ -42,11 +50,17 @@ public class PaymentToUser {
 	   }
 	   wait.until(ExpectedConditions.visibilityOf(Repository.login));
 	   Repository.login.click();
-	   Repository.username.sendKeys("demo");
-	   Repository.password.sendKeys("1234");
+	   FileInputStream excelFile = new FileInputStream("C:\\Users\\sraja\\eclipse-workspace\\Spartans_Pilot_Project\\src\\main\\resources\\ExcelFile\\LoginCredentials.xlsx");
+       XSSFWorkbook book = new XSSFWorkbook(excelFile);
+       XSSFSheet sheet = book.getSheetAt(0);
+       String userName=sheet.getRow(1).getCell(0)+"";
+       String password=sheet.getRow(1).getCell(1)+"";
+       int index=password.indexOf('.');
+       password=password.substring(0,index);
+	   Repository.username.sendKeys(userName);
+	   Repository.password.sendKeys(password);
 	   Repository.submit.click();
 	   Thread.sleep(3000);
-	   
 	}
 	@Given("click on banking")
 	public void click_on_banking() throws InterruptedException {
@@ -59,7 +73,7 @@ public class PaymentToUser {
 	@Given("click on payment user")
 	public void click_on_payment_user() throws InterruptedException {
 	    Repository.paymentToUser.click();
-	    WebDriverWait wait = new WebDriverWait(driver,30);
+	    WebDriverWait wait = new WebDriverWait(driver,60);
 	    wait.until(ExpectedConditions.visibilityOf(Repository.contactbook));
 	    
 	}
@@ -73,15 +87,10 @@ public class PaymentToUser {
 	}
 
 	@When("click on amount field and enter amount to transfer")
-	public void click_on_amount_field_and_enter_amount_to_transfer() throws InterruptedException {
+	public void click_on_amount_field_and_enter_amount_to_transfer() throws InterruptedException, IOException {
 		Thread.sleep(3000);
 		Repository.amount.sendKeys("500");
 	    
-	}
-
-	@When("Select the scheduling option to select paynow option")
-	public void select_the_scheduling_option_to_select_anyone_feature() {
-		Repository.paynow.click();
 	}
 
 	@When("enter some description in the textbox for the user needs")
@@ -111,6 +120,7 @@ public class PaymentToUser {
 			String text = Repository.transactionSuccess.getText();
 			System.out.println(text);
 		}
+	    ExtentCucumberAdapter.addTestStepLog(Status.PASS + "Login Clicked");
 	}
-
+	
 }

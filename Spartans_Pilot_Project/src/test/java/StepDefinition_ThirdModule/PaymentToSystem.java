@@ -1,13 +1,20 @@
 package StepDefinition_ThirdModule;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,7 +24,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class PaymentToSystem {
 	public static WebDriver driver;
 	@Given("User should launch the cyclos website and login with  valid credentials")
-	public void user_should_launch_the_cyclos_website_and_login_with_valid_credentials() throws InterruptedException {
+	public void user_should_launch_the_cyclos_website_and_login_with_valid_credentials() throws InterruptedException, IOException {
 		WebDriverManager.chromedriver().setup();
 		driver=new ChromeDriver();
 		driver.manage().window().maximize();
@@ -39,8 +46,15 @@ public class PaymentToSystem {
 	   }
 	   wait.until(ExpectedConditions.visibilityOf(Repository.login));
 	   Repository.login.click();
-	   Repository.username.sendKeys("demo");
-	   Repository.password.sendKeys("1234");
+	   FileInputStream excelFile = new FileInputStream("C:\\Users\\sraja\\eclipse-workspace\\Spartans_Pilot_Project\\src\\main\\resources\\ExcelFile\\LoginCredentials.xlsx");
+       XSSFWorkbook book = new XSSFWorkbook(excelFile);
+       XSSFSheet sheet = book.getSheetAt(0);
+       String userName=sheet.getRow(1).getCell(0)+"";
+       String password=sheet.getRow(1).getCell(1)+"";
+       int index=password.indexOf('.');
+       password=password.substring(0,index);
+	   Repository.username.sendKeys(userName);
+	   Repository.password.sendKeys(password);
 	   Repository.submit.click();
 	   Thread.sleep(5000);
 	}
@@ -125,5 +139,6 @@ public class PaymentToSystem {
 	@When("click the installment option now")
 	public void click_the_installment_option_now() {
 	    Repository.nowOnInstallmentOption.click();
+	    ExtentCucumberAdapter.addTestStepLog(Status.PASS + "Login Clicked");
 	}
 }

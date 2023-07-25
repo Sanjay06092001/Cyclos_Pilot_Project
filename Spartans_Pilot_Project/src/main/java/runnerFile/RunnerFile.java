@@ -1,16 +1,19 @@
 package runnerFile;
 
-import org.junit.runner.RunWith;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
+@io.cucumber.testng.CucumberOptions(
+		features = {"C:\\Users\\sraja\\eclipse-workspace\\Spartans_Pilot_Project\\src\\test\\resources\\FeatureFiles\\3_Payment\\3.1PaymentToUser.feature",
+					"C:\\Users\\sraja\\eclipse-workspace\\Spartans_Pilot_Project\\src\\test\\resources\\FeatureFiles\\3_Payment\\3.2PaymentToSystem.feature",
+					"C:\\Users\\sraja\\eclipse-workspace\\Spartans_Pilot_Project\\src\\test\\resources\\FeatureFiles\\3_Payment\\PaymentRequest.feature"
+				}, 
+		glue = {"StepDefinition_ThirdModule" }, 
+		plugin = {"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:\",\"pretty",
+				  "html:target/cucumber-reports/cucumberreport.html"},
+		dryRun=false,
+		monochrome = true
+		)
 
-@RunWith(Cucumber.class)
-@CucumberOptions(
-features="C:\\Users\\sraja\\eclipse-workspace\\Spartans_Pilot_Project\\src\\test\\resources\\FeatureFiles\\3_Payment\\PaymentRequest.feature",
-glue={"StepDefinition_ThirdModule"}				
-)
-
-public class RunnerFile {
+public class RunnerFile extends AbstractTestNGCucumberTests  {
 
 }
